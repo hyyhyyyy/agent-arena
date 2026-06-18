@@ -40,13 +40,16 @@
 
 html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-primary); color: var(--text-primary); overflow: hidden; }
 
+/* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--border-light); }
 
+/* ===== LAYOUT ===== */
 .app { display: flex; height: 100vh; position: relative; }
 
+/* ===== CHAT AREA ===== */
 .chat-area { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 
 .chat-header {
@@ -75,6 +78,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 }
 .icon-btn:hover { background: var(--bg-hover); color: var(--text-primary); border-color: var(--border-light); }
 
+/* Messages */
 .messages-container {
   flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 4px;
 }
@@ -113,6 +117,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
   padding: 8px 16px; border: 1px dashed var(--border);
 }
 
+/* Thinking indicator */
 .msg-thinking {
   display: flex; align-items: center; gap: 8px; padding: 10px 16px;
   background: var(--bg-tertiary); border: 1px solid var(--border); border-radius: var(--radius-lg);
@@ -127,6 +132,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 .thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes dotPulse { 0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1); } }
 
+/* Quote reference */
 .msg-quote {
   padding: 6px 10px; margin-bottom: 6px; border-left: 3px solid var(--accent);
   background: rgba(108,92,231,0.08); border-radius: 0 6px 6px 0;
@@ -134,6 +140,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 }
 .msg-quote:hover { background: rgba(108,92,231,0.15); }
 
+/* Markdown content */
 .msg-bubble .md-content h1, .msg-bubble .md-content h2, .msg-bubble .md-content h3 {
   margin: 12px 0 6px; font-weight: 600;
 }
@@ -162,6 +169,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 }
 .msg-bubble .md-content th { background: var(--bg-hover); }
 
+/* Stop button */
 .stop-btn {
   display: none; align-items: center; gap: 6px; padding: 8px 20px;
   background: var(--danger); color: #fff; border: none; border-radius: var(--radius-md);
@@ -171,6 +179,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 .stop-btn.visible { display: flex; }
 .stop-btn:hover { filter: brightness(1.15); }
 
+/* ===== INPUT AREA ===== */
 .input-area {
   padding: 16px 24px 20px; border-top: 1px solid var(--border);
   background: var(--bg-secondary);
@@ -200,6 +209,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 
 .input-hint { font-size: 11px; color: var(--text-muted); margin-top: 6px; text-align: center; }
 
+/* ===== DRAWER ===== */
 .drawer-overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100;
   opacity: 0; pointer-events: none; transition: opacity 0.3s;
@@ -228,6 +238,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 
 .drawer-body { flex: 1; overflow-y: auto; padding: 20px; }
 
+/* Tabs */
 .drawer-tabs { display: flex; gap: 2px; margin-bottom: 20px; background: var(--bg-tertiary); border-radius: var(--radius-sm); padding: 3px; }
 .drawer-tab {
   flex: 1; padding: 8px; text-align: center; font-size: 13px; font-weight: 500;
@@ -240,6 +251,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 .drawer-panel { display: none; }
 .drawer-panel.active { display: block; }
 
+/* Agent card in list */
 .agent-card {
   display: flex; align-items: center; gap: 12px; padding: 12px;
   background: var(--bg-tertiary); border: 1px solid var(--border);
@@ -258,6 +270,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 .agent-card-role { font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .agent-card-toggle { display: flex; align-items: center; gap: 6px; }
 
+/* Toggle switch */
 .toggle {
   width: 38px; height: 20px; background: var(--bg-hover); border-radius: 10px;
   position: relative; cursor: pointer; transition: background 0.2s; border: 1px solid var(--border);
@@ -269,6 +282,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 }
 .toggle.on::after { transform: translateX(18px); }
 
+/* Form */
 .form-group { margin-bottom: 16px; }
 .form-label { display: block; font-size: 12px; font-weight: 500; color: var(--text-secondary); margin-bottom: 6px; }
 .form-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
@@ -286,6 +300,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 .form-row { display: flex; gap: 12px; }
 .form-row .form-group { flex: 1; }
 
+/* Color picker row */
 .color-picker-row { display: flex; gap: 6px; flex-wrap: wrap; }
 .color-swatch {
   width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid transparent;
@@ -294,6 +309,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 .color-swatch.selected { border-color: #fff; transform: scale(1.15); }
 .color-swatch:hover { transform: scale(1.1); }
 
+/* Template cards */
 .template-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
 .template-card {
   padding: 14px; background: var(--bg-tertiary); border: 1px solid var(--border);
@@ -304,6 +320,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 .template-card-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
 .template-card-desc { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
 
+/* API config */
 .api-status {
   display: flex; align-items: center; gap: 6px; padding: 8px 12px;
   background: var(--bg-tertiary); border-radius: var(--radius-sm); margin-bottom: 16px;
@@ -313,6 +330,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 .api-status .status-dot.connected { background: var(--success); }
 .api-status .status-dot.disconnected { background: var(--danger); }
 
+/* Buttons */
 .btn {
   padding: 9px 18px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500;
   cursor: pointer; transition: all 0.2s; border: 1px solid transparent;
@@ -329,6 +347,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 
 .btn-row { display: flex; gap: 8px; margin-top: 16px; }
 
+/* Empty state */
 .empty-state {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   height: 100%; color: var(--text-muted); gap: 12px; padding: 40px;
@@ -337,6 +356,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 .empty-state-title { font-size: 16px; font-weight: 500; color: var(--text-secondary); }
 .empty-state-desc { font-size: 13px; text-align: center; line-height: 1.5; max-width: 320px; }
 
+/* Context menu for messages */
 .msg-actions {
   position: absolute; top: -8px; right: 8px; display: none; gap: 2px;
   background: var(--bg-tertiary); border: 1px solid var(--border);
@@ -350,6 +370,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 }
 .msg-action-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
 
+/* Toast */
 .toast-container { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 200; display: flex; flex-direction: column; gap: 8px; }
 .toast {
   padding: 10px 20px; background: var(--bg-tertiary); border: 1px solid var(--border);
@@ -360,6 +381,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 @keyframes toastIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes toastOut { from { opacity: 1; } to { opacity: 0; } }
 
+/* Modal */
 .modal-overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 150;
   display: none; align-items: center; justify-content: center;
@@ -372,6 +394,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 .modal h3 { font-size: 16px; font-weight: 600; margin-bottom: 12px; }
 .modal p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px; }
 
+/* Responsive */
 @media (max-width: 768px) {
   .drawer { width: 100%; right: -100%; }
   .message-group { max-width: 95%; }
@@ -384,6 +407,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 <body>
 
 <div class="app">
+  <!-- Chat Area -->
   <div class="chat-area">
     <div class="chat-header">
       <div class="chat-header-left">
@@ -427,8 +451,10 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
   </div>
 </div>
 
+<!-- Drawer Overlay -->
 <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
 
+<!-- Drawer -->
 <div class="drawer" id="drawer">
   <div class="drawer-header">
     <h2>智能体管理</h2>
@@ -442,6 +468,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
       <button class="drawer-tab" onclick="switchTab('templates')">模板</button>
     </div>
 
+    <!-- Agents List Panel -->
     <div class="drawer-panel active" id="panel-agents">
       <div id="agentsList"></div>
       <div id="noAgents" style="text-align:center; padding:30px; color:var(--text-muted); font-size:13px;">
@@ -449,6 +476,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
       </div>
     </div>
 
+    <!-- Create/Edit Panel -->
     <div class="drawer-panel" id="panel-create">
       <input type="hidden" id="editAgentId" value="">
       <div class="form-group">
@@ -504,6 +532,34 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
         </div>
       </div>
 
+      <div style="border-top:1px solid var(--border); padding-top:16px; margin-top:8px;">
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px; color:var(--text-secondary); display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="toggleAgentApiSection(this)">
+          <span>🔌 API 配置（可选，留空则使用全局）</span>
+          <span id="agentApiToggleIcon">▼</span>
+        </div>
+        <div id="agentApiSection">
+          <div class="form-group">
+            <label class="form-label">API Base URL</label>
+            <input class="form-input" id="agentApiBaseUrl" placeholder="留空使用全局配置">
+            <div class="form-hint">覆盖全局 API 地址</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">API Key</label>
+            <input class="form-input" id="agentApiKey" type="password" placeholder="留空使用全局配置">
+          </div>
+          <div class="form-group">
+            <label class="form-label">模型名称</label>
+            <input class="form-input" id="agentApiModel" placeholder="留空使用全局配置">
+            <div class="form-hint">覆盖全局模型名</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">自定义请求头 (JSON)</label>
+            <textarea class="form-textarea" id="agentApiHeaders" rows="2" placeholder='{"X-Custom-Header": "value"}'></textarea>
+            <div class="form-hint">与全局请求头合并，同名时优先使用此处的值</div>
+          </div>
+        </div>
+      </div>
+
       <div class="btn-row">
         <button class="btn btn-primary" onclick="saveAgent()">保存</button>
         <button class="btn btn-secondary" onclick="resetForm()">重置</button>
@@ -511,6 +567,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
       </div>
     </div>
 
+    <!-- API Config Panel -->
     <div class="drawer-panel" id="panel-api">
       <div class="api-status">
         <span class="status-dot disconnected" id="apiStatusDot"></span>
@@ -538,6 +595,7 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
       <button class="btn btn-primary btn-block" onclick="testApiConnection()">测试连接</button>
     </div>
 
+    <!-- Templates Panel -->
     <div class="drawer-panel" id="panel-templates">
       <div style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">点击模板快速添加智能体，添加后可自定义修改</div>
       <div class="template-grid" id="templateGrid"></div>
@@ -545,13 +603,16 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
   </div>
 </div>
 
+<!-- Modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal" id="modalContent"></div>
 </div>
 
+<!-- Toast Container -->
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
+// ===== STATE =====
 const STATE = {
   agents: [],
   messages: [],
@@ -599,6 +660,7 @@ const TEMPLATES = [
   },
 ];
 
+// ===== UTILS =====
 function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
 
 function toast(msg, type = 'info') {
@@ -635,11 +697,14 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+// ===== PERSISTENCE =====
 function saveState() {
   try {
     localStorage.setItem('agentArena_agents', JSON.stringify(STATE.agents));
     localStorage.setItem('agentArena_messages', JSON.stringify(STATE.messages));
-    localStorage.setItem('agentArena_api', JSON.stringify(STATE.apiConfig));
+    const apiSave = { ...STATE.apiConfig };
+    // Don't persist apiKey for security - but user requested localStorage, so we do
+    localStorage.setItem('agentArena_api', JSON.stringify(apiSave));
   } catch(e) {}
 }
 
@@ -654,6 +719,7 @@ function loadState() {
   } catch(e) {}
 }
 
+// ===== DRAWER =====
 function openDrawer() {
   document.getElementById('drawerOverlay').classList.add('open');
   document.getElementById('drawer').classList.add('open');
@@ -673,21 +739,25 @@ function switchTab(tab) {
   });
   document.querySelectorAll('.drawer-panel').forEach(el => el.classList.remove('active'));
   document.getElementById('panel-' + tab).classList.add('active');
+
   if (tab === 'agents') renderAgentsList();
   if (tab === 'api') loadApiConfig();
   if (tab === 'templates') renderTemplates();
   if (tab === 'create') initColorPicker();
 }
 
+// ===== AGENTS LIST =====
 function renderAgentsList() {
   const container = document.getElementById('agentsList');
   const noAgents = document.getElementById('noAgents');
+
   if (STATE.agents.length === 0) {
     container.innerHTML = '';
     noAgents.style.display = 'block';
     return;
   }
   noAgents.style.display = 'none';
+
   container.innerHTML = STATE.agents.map(a => `
     <div class="agent-card ${a.active ? 'selected' : ''}" onclick="editAgent('${a.id}')">
       <div class="agent-card-avatar" style="background:${a.color}">${a.name.charAt(0)}</div>
@@ -700,6 +770,7 @@ function renderAgentsList() {
       </div>
     </div>
   `).join('');
+
   updateActiveAgentsBar();
 }
 
@@ -726,12 +797,14 @@ function updateActiveAgentsBar() {
   `).join('');
 }
 
+// ===== CREATE / EDIT AGENT =====
 function initColorPicker() {
   const picker = document.getElementById('colorPicker');
   const currentColor = document.getElementById('agentColor')?.value || COLORS[0];
   picker.innerHTML = COLORS.map(c =>
     `<div class="color-swatch ${c === currentColor ? 'selected' : ''}" style="background:${c}" onclick="selectColor('${c}', this)"></div>`
   ).join('');
+  // Store selected color
   if (!document.getElementById('agentColor')) {
     const hidden = document.createElement('input');
     hidden.type = 'hidden';
@@ -751,6 +824,7 @@ function saveAgent() {
   const id = document.getElementById('editAgentId').value;
   const name = document.getElementById('agentName').value.trim();
   if (!name) { toast('请输入名称', 'warning'); return; }
+
   const data = {
     name,
     color: document.getElementById('agentColor')?.value || COLORS[0],
@@ -762,7 +836,13 @@ function saveAgent() {
     model: document.getElementById('agentModel').value.trim(),
     tools: document.getElementById('agentTools').value.trim(),
     knowledge: document.getElementById('agentKnowledge').value.trim(),
+    // Agent-level API config
+    apiBaseUrl: document.getElementById('agentApiBaseUrl').value.trim(),
+    apiKey: document.getElementById('agentApiKey').value.trim(),
+    apiModel: document.getElementById('agentApiModel').value.trim(),
+    apiHeaders: document.getElementById('agentApiHeaders').value.trim(),
   };
+
   if (id) {
     const agent = STATE.agents.find(a => a.id === id);
     if (agent) Object.assign(agent, data);
@@ -771,6 +851,7 @@ function saveAgent() {
     STATE.agents.push({ id: genId(), active: true, ...data });
     toast('已添加: ' + name, 'success');
   }
+
   saveState();
   resetForm();
   renderAgentsList();
@@ -780,6 +861,7 @@ function saveAgent() {
 function editAgent(id) {
   const agent = STATE.agents.find(a => a.id === id);
   if (!agent) return;
+
   switchTab('create');
   setTimeout(() => {
     document.getElementById('editAgentId').value = agent.id;
@@ -793,8 +875,14 @@ function editAgent(id) {
     document.getElementById('agentModel').value = agent.model || '';
     document.getElementById('agentTools').value = agent.tools || '';
     document.getElementById('agentKnowledge').value = agent.knowledge || '';
+    // Agent-level API config
+    document.getElementById('agentApiBaseUrl').value = agent.apiBaseUrl || '';
+    document.getElementById('agentApiKey').value = agent.apiKey || '';
+    document.getElementById('agentApiModel').value = agent.apiModel || '';
+    document.getElementById('agentApiHeaders').value = agent.apiHeaders || '';
     document.getElementById('deleteAgentBtn').style.display = 'inline-flex';
     initColorPicker();
+    // Re-select the agent's color
     document.querySelectorAll('.color-swatch').forEach(s => {
       s.classList.toggle('selected', s.style.background === agent.color || s.style.backgroundColor === agent.color);
     });
@@ -832,10 +920,16 @@ function resetForm() {
   document.getElementById('agentModel').value = '';
   document.getElementById('agentTools').value = '';
   document.getElementById('agentKnowledge').value = '';
+  // Agent-level API config
+  document.getElementById('agentApiBaseUrl').value = '';
+  document.getElementById('agentApiKey').value = '';
+  document.getElementById('agentApiModel').value = '';
+  document.getElementById('agentApiHeaders').value = '';
   document.getElementById('deleteAgentBtn').style.display = 'none';
   initColorPicker();
 }
 
+// ===== TEMPLATES =====
 function renderTemplates() {
   const grid = document.getElementById('templateGrid');
   grid.innerHTML = TEMPLATES.map((t, i) => `
@@ -849,18 +943,20 @@ function renderTemplates() {
 
 function addFromTemplate(idx) {
   const t = TEMPLATES[idx];
-  STATE.agents.push({
+  const agent = {
     id: genId(), active: true,
     name: t.name, color: t.color, role: t.role,
     personality: t.personality, systemPrompt: t.systemPrompt,
     temperature: t.temperature, maxTokens: 2048,
     model: '', tools: '', knowledge: '',
-  });
+  };
+  STATE.agents.push(agent);
   saveState();
   toast('已添加模板: ' + t.name, 'success');
   switchTab('agents');
 }
 
+// ===== API CONFIG =====
 function loadApiConfig() {
   document.getElementById('apiBaseUrl').value = STATE.apiConfig.baseUrl || '';
   document.getElementById('apiKey').value = STATE.apiConfig.apiKey || '';
@@ -932,8 +1028,13 @@ async function testApiConnection() {
   }
 }
 
+// ===== MESSAGES =====
 function addMessage(data) {
-  const msg = { id: genId(), timestamp: Date.now(), ...data };
+  const msg = {
+    id: genId(),
+    timestamp: Date.now(),
+    ...data,
+  };
   STATE.messages.push(msg);
   saveState();
   renderMessage(msg);
@@ -944,9 +1045,11 @@ function addMessage(data) {
 function renderMessage(msg) {
   const container = document.getElementById('messagesContainer');
   document.getElementById('emptyState').style.display = 'none';
+
   const div = document.createElement('div');
   div.className = `message-group ${msg.type}`;
   div.id = `msg-${msg.id}`;
+
   if (msg.type === 'system') {
     div.innerHTML = `<div class="msg-body"><div class="msg-bubble">${escapeHtml(msg.content)}</div></div>`;
   } else if (msg.type === 'user') {
@@ -979,6 +1082,7 @@ function renderMessage(msg) {
       </div>
     `;
   }
+
   container.appendChild(div);
   return div;
 }
@@ -1007,11 +1111,13 @@ function scrollToMsg(id) {
   }
 }
 
+// ===== CHAT ACTIONS =====
 function quoteReply(msgId) {
   const msg = STATE.messages.find(m => m.id === msgId);
   if (!msg) return;
   const agent = msg.agentId ? STATE.agents.find(a => a.id === msg.agentId) : null;
   const name = agent?.name || '你';
+  const snippet = msg.content.slice(0, 80);
   const input = document.getElementById('chatInput');
   input.value = `@${name} `;
   input.focus();
@@ -1028,6 +1134,7 @@ function copyMsg(msgId) {
 async function regenerateMsg(msgId) {
   const msg = STATE.messages.find(m => m.id === msgId);
   if (!msg || msg.type !== 'agent') return;
+  // Remove messages after this one and re-trigger
   const idx = STATE.messages.indexOf(msg);
   STATE.messages = STATE.messages.slice(0, idx);
   saveState();
@@ -1048,24 +1155,20 @@ function rerenderAllMessages() {
   }
 }
 
+// ===== SEND MESSAGE =====
 async function sendMessage() {
   const input = document.getElementById('chatInput');
   const text = input.value.trim();
   if (!text || STATE.isRunning) return;
-  if (!STATE.apiConfig.baseUrl || !STATE.apiConfig.apiKey) {
-    toast('请先配置 API', 'warning');
-    openDrawer();
-    switchTab('api');
-    return;
-  }
+
   const activeAgents = STATE.agents.filter(a => a.active);
   if (activeAgents.length === 0) {
     toast('请至少启用一个智能体', 'warning');
     openDrawer();
     return;
   }
-  const quoteId = input.dataset.quote;
-  delete input.dataset.quote;
+
+  // Parse @mentions
   const mentions = [];
   const mentionRegex = /@(\S+)/g;
   let match;
@@ -1073,12 +1176,29 @@ async function sendMessage() {
     const mentioned = activeAgents.find(a => a.name === match[1]);
     if (mentioned) mentions.push(mentioned.id);
   }
-  addMessage({ type: 'user', content: text, quote: quoteId || undefined });
-  input.value = '';
-  autoResize(input);
+
+  // Determine which agents respond
   const targetAgents = mentions.length > 0
     ? activeAgents.filter(a => mentions.includes(a.id))
     : activeAgents;
+
+  // Check API config for each target agent
+  const missingApi = targetAgents.filter(a => !hasAgentApi(a));
+  if (missingApi.length > 0) {
+    toast(`智能体「${missingApi[0].name}」缺少 API 配置`, 'warning');
+    openDrawer();
+    switchTab('api');
+    return;
+  }
+
+  const quoteId = input.dataset.quote;
+  delete input.dataset.quote;
+
+  // Add user message
+  addMessage({ type: 'user', content: text, quote: quoteId || undefined });
+  input.value = '';
+  autoResize(input);
+
   await triggerAgentResponses(null, targetAgents);
 }
 
@@ -1087,35 +1207,48 @@ async function triggerAgentResponses(specificAgentId, targetAgents) {
   STATE.abortController = new AbortController();
   document.getElementById('stopBtn').classList.add('visible');
   document.getElementById('sendBtn').disabled = true;
+
   const agents = specificAgentId
     ? STATE.agents.filter(a => a.id === specificAgentId && a.active)
     : targetAgents || STATE.agents.filter(a => a.active);
+
   let discussionRound = 0;
-  const maxRounds = 20;
+  const maxRounds = 20; // Safety limit
+
   try {
     while (discussionRound < maxRounds && STATE.isRunning) {
       let anyAgentSpoke = false;
+
       for (const agent of agents) {
         if (!STATE.isRunning) break;
+
+        // Build prompt with conversation context
         const shouldRespond = await determineIfAgentShouldRespond(agent);
         if (!shouldRespond) continue;
+
         anyAgentSpoke = true;
         STATE.currentAgentId = agent.id;
         updateActiveAgentsBar();
+
+        // Show thinking indicator
         const thinkingMsg = addMessage({
           type: 'agent', agentId: agent.id,
           content: '', thinking: `${agent.name} 正在思考…`,
         });
+
         try {
           const response = await callApi(agent);
+          // Remove thinking indicator and update content
           const msgIdx = STATE.messages.findIndex(m => m.id === thinkingMsg.id);
           if (msgIdx !== -1) {
             STATE.messages[msgIdx].content = response;
             STATE.messages[msgIdx].thinking = undefined;
             saveState();
+            // Update DOM
+            const bubble = document.getElementById(`bubble-${thinkingMsg.id}`);
+            const md = document.getElementById(`md-${thinkingMsg.id}`);
             const thinkingEl = document.querySelector(`#msg-${thinkingMsg.id} .msg-thinking`);
             if (thinkingEl) thinkingEl.remove();
-            const md = document.getElementById(`md-${thinkingMsg.id}`);
             if (md) md.innerHTML = renderMarkdown(response);
           }
         } catch(e) {
@@ -1133,11 +1266,45 @@ async function triggerAgentResponses(specificAgentId, targetAgents) {
           break;
         }
       }
-      STATE.currentAgentId = null;
-      updateActiveAgentsBar();
-      if (!anyAgentSpoke || !STATE.isRunning) break;
-      discussionRound++;
-    }
+
+  STATE.currentAgentId = null;
+  updateActiveAgentsBar();
+}
+
+// ===== AGENT API CONFIG HELPER =====
+function getAgentApiConfig(agent) {
+  // Agent-level overrides global; agent-level empty values fall back to global
+  const baseUrl = agent.apiBaseUrl || STATE.apiConfig.baseUrl;
+  const apiKey = agent.apiKey || STATE.apiConfig.apiKey;
+  const model = agent.apiModel || agent.model || STATE.apiConfig.model || '';
+  let headers = {};
+  // Parse agent headers first
+  if (agent.apiHeaders) {
+    try { headers = JSON.parse(agent.apiHeaders); } catch(e) {}
+  }
+  // Merge with global headers, agent-level wins on conflict
+  if (STATE.apiConfig.headers) {
+    headers = { ...STATE.apiConfig.headers, ...headers };
+  }
+  return { baseUrl, apiKey, model, headers };
+}
+
+function hasAgentApi(agent) {
+  const cfg = getAgentApiConfig(agent);
+  return cfg.baseUrl && cfg.apiKey;
+}
+
+function toggleAgentApiSection(el) {
+  const section = document.getElementById('agentApiSection');
+  const icon = document.getElementById('agentApiToggleIcon');
+  if (section.style.display === 'none') {
+    section.style.display = 'block';
+    icon.textContent = '▼';
+  } else {
+    section.style.display = 'none';
+    icon.textContent = '▶';
+  }
+}
   } catch(e) {
     if (e.name !== 'AbortError') toast('讨论异常: ' + e.message, 'error');
   } finally {
@@ -1151,24 +1318,38 @@ async function triggerAgentResponses(specificAgentId, targetAgents) {
 }
 
 async function determineIfAgentShouldRespond(agent) {
+  const cfg = getAgentApiConfig(agent);
+  if (!cfg.baseUrl || !cfg.apiKey) return false;
+
+  // First round: all targeted agents respond
+  // Subsequent rounds: let the LLM decide if it has something to add
   const recentMessages = STATE.messages.filter(m => m.type !== 'system').slice(-6);
-  if (recentMessages.length <= 1) return true;
+  if (recentMessages.length <= 1) return true; // First message, always respond
+
+  // Build prompt with conversation context
   const lastMsg = recentMessages[recentMessages.length - 1];
-  if (lastMsg.agentId === agent.id) return false;
+  if (lastMsg.agentId === agent.id) return false; // Don't respond to yourself immediately
+
+  // For subsequent rounds, check if there's something worth responding to
   const lastAgentMsg = recentMessages.filter(m => m.type === 'agent').pop();
   if (!lastAgentMsg) return true;
+
+  // Simple heuristic: if the last message was from another agent discussing,
+  // ask the current agent if it wants to contribute
   const checkPrompt = [
     { role: 'system', content: `${agent.systemPrompt || 'You are ' + agent.name}. Personality: ${agent.personality || ''}` },
     { role: 'user', content: `Based on the conversation so far, do you have anything meaningful to add? If the discussion has reached a natural conclusion or you have nothing new to contribute, respond with exactly "PASS". Otherwise, respond with your contribution.\n\nLast message in conversation: "${lastMsg.content.slice(0, 200)}"` }
   ];
+
   try {
-    const model = agent.model || STATE.apiConfig.model || 'gpt-4o-mini';
-    const url = STATE.apiConfig.baseUrl.replace(/\/$/, '') + '/chat/completions';
+    const model = cfg.model || 'gpt-4o-mini';
+    const url = cfg.baseUrl.replace(/\/$/, '') + '/chat/completions';
     const headers = {
-      'Authorization': `Bearer ${STATE.apiConfig.apiKey}`,
+      'Authorization': `Bearer ${cfg.apiKey}`,
       'Content-Type': 'application/json',
-      ...STATE.apiConfig.headers,
+      ...cfg.headers,
     };
+
     const resp = await fetch(url, {
       method: 'POST', headers,
       body: JSON.stringify({
@@ -1177,25 +1358,41 @@ async function determineIfAgentShouldRespond(agent) {
       }),
       signal: AbortSignal.timeout(15000),
     });
+
     if (resp.ok) {
       const data = await resp.json();
       const text = data.choices?.[0]?.message?.content?.trim() || '';
       return text !== 'PASS';
     }
   } catch(e) {}
-  return true;
+
+  return true; // Default: respond
+}
+  } catch(e) {}
+
+  return true; // Default: respond
 }
 
 async function callApi(agent) {
-  const model = agent.model || STATE.apiConfig.model || 'gpt-4o-mini';
-  const url = STATE.apiConfig.baseUrl.replace(/\/$/, '') + '/chat/completions';
+  const cfg = getAgentApiConfig(agent);
+  if (!cfg.baseUrl || !cfg.apiKey) {
+    throw new Error(`智能体「${agent.name}」缺少 API 配置`);
+  }
+
+  const model = cfg.model || 'gpt-4o-mini';
+  const url = cfg.baseUrl.replace(/\/$/, '') + '/chat/completions';
+
   const headers = {
-    'Authorization': `Bearer ${STATE.apiConfig.apiKey}`,
+    'Authorization': `Bearer ${cfg.apiKey}`,
     'Content-Type': 'application/json',
-    ...STATE.apiConfig.headers,
+    ...cfg.headers,
   };
+
+  // Build messages array
   const systemContent = buildSystemPrompt(agent);
   const apiMessages = [{ role: 'system', content: systemContent }];
+
+  // Add conversation history
   const recentMsgs = STATE.messages.slice(-20);
   for (const msg of recentMsgs) {
     if (msg.type === 'user') {
@@ -1205,10 +1402,13 @@ async function callApi(agent) {
       apiMessages.push({ role: 'assistant', content: `[${a?.name || 'Agent'}]: ${msg.content}` });
     }
   }
+
+  // Add instruction for the current agent
   apiMessages.push({
     role: 'user',
     content: `[System: It's now ${agent.name}'s turn to speak. Respond as ${agent.name}. Keep your response focused and avoid repeating what others have said. If you have nothing new to add, respond with "PASS".]`
   });
+
   const body = {
     model,
     messages: apiMessages,
@@ -1216,37 +1416,50 @@ async function callApi(agent) {
     max_tokens: agent.maxTokens || 2048,
     stream: true,
   };
+
+  // Add tools if configured
   if (agent.tools) {
-    try { body.tools = JSON.parse(agent.tools); } catch(e) {}
+    try {
+      body.tools = JSON.parse(agent.tools);
+    } catch(e) {}
   }
+
   const resp = await fetch(url, {
     method: 'POST', headers,
     body: JSON.stringify(body),
     signal: STATE.abortController?.signal,
   });
+
   if (!resp.ok) {
     const err = await resp.text().catch(() => '');
     throw new Error(`HTTP ${resp.status}: ${err.slice(0, 200)}`);
   }
+
+  // Stream response
   const reader = resp.body.getReader();
   const decoder = new TextDecoder();
   let fullContent = '';
   let buffer = '';
+
   while (true) {
     const { done, value } = await reader.read();
     if (done) break;
+
     buffer += decoder.decode(value, { stream: true });
     const lines = buffer.split('\n');
     buffer = lines.pop() || '';
+
     for (const line of lines) {
       if (!line.startsWith('data: ')) continue;
       const data = line.slice(6).trim();
       if (data === '[DONE]') break;
+
       try {
         const json = JSON.parse(data);
         const delta = json.choices?.[0]?.delta?.content || '';
         if (delta) {
           fullContent += delta;
+          // Update UI in real-time
           const lastMsg = STATE.messages[STATE.messages.length - 1];
           if (lastMsg) {
             lastMsg.content = fullContent;
@@ -1258,6 +1471,7 @@ async function callApi(agent) {
       } catch(e) {}
     }
   }
+
   return fullContent;
 }
 
@@ -1265,6 +1479,8 @@ function buildSystemPrompt(agent) {
   let prompt = agent.systemPrompt || `You are ${agent.name}.`;
   if (agent.role) prompt += `\nYour role: ${agent.role}.`;
   if (agent.personality) prompt += `\nYour personality: ${agent.personality}.`;
+
+  // Add other agents info so this agent knows who it's talking with
   const others = STATE.agents.filter(a => a.id !== agent.id && a.active);
   if (others.length > 0) {
     prompt += `\n\nYou are in a group chat with the following participants:`;
@@ -1273,9 +1489,11 @@ function buildSystemPrompt(agent) {
     });
     prompt += `\n\nYou can refer to other participants by name. Engage in meaningful discussion - agree, disagree, build upon, or critique others' points as appropriate. Stay in character.`;
   }
+
   if (agent.knowledge) {
     prompt += `\n\n--- Attached Knowledge ---\n${agent.knowledge}`;
   }
+
   return prompt;
 }
 
@@ -1287,6 +1505,7 @@ function stopDiscussion() {
   toast('已停止讨论', 'warning');
 }
 
+// ===== INPUT HANDLING =====
 function handleInputKey(e) {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
@@ -1299,8 +1518,10 @@ function autoResize(el) {
   el.style.height = Math.min(el.scrollHeight, 120) + 'px';
 }
 
+// ===== EXPORT / CLEAR =====
 function exportChat() {
   if (STATE.messages.length === 0) { toast('没有可导出的消息', 'warning'); return; }
+
   let text = '# AgentArena 对话记录\n\n';
   STATE.messages.forEach(msg => {
     const time = formatTime(msg.timestamp);
@@ -1313,6 +1534,7 @@ function exportChat() {
       text += `*[${time}] ${msg.content}*\n\n`;
     }
   });
+
   const blob = new Blob([text], { type: 'text/markdown' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -1347,17 +1569,27 @@ function confirmClearChat() {
   toast('已清空', 'success');
 }
 
+// ===== INIT =====
 function init() {
   loadState();
   renderAgentsList();
   loadApiConfig();
+
+  // Restore messages
   if (STATE.messages.length > 0) {
     STATE.messages.forEach(msg => renderMessage(msg));
     scrollToBottom();
   }
+
+  // Init color picker
   initColorPicker();
+
+  // Configure marked
   if (typeof marked !== 'undefined') {
-    marked.setOptions({ breaks: true, gfm: true });
+    marked.setOptions({
+      breaks: true,
+      gfm: true,
+    });
   }
 }
 
