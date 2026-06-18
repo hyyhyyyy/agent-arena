@@ -1267,8 +1267,22 @@ async function triggerAgentResponses(specificAgentId, targetAgents) {
         }
       }
 
-  STATE.currentAgentId = null;
-  updateActiveAgentsBar();
+      STATE.currentAgentId = null;
+      updateActiveAgentsBar();
+
+      if (!anyAgentSpoke) break;
+      discussionRound++;
+    }
+  } catch(e) {
+    if (e.name !== 'AbortError') toast('讨论异常: ' + e.message, 'error');
+  } finally {
+    STATE.isRunning = false;
+    STATE.currentAgentId = null;
+    STATE.abortController = null;
+    document.getElementById('stopBtn').classList.remove('visible');
+    document.getElementById('sendBtn').disabled = false;
+    updateActiveAgentsBar();
+  }
 }
 
 // ===== AGENT API CONFIG HELPER =====
@@ -1303,17 +1317,6 @@ function toggleAgentApiSection(el) {
   } else {
     section.style.display = 'none';
     icon.textContent = '▶';
-  }
-}
-  } catch(e) {
-    if (e.name !== 'AbortError') toast('讨论异常: ' + e.message, 'error');
-  } finally {
-    STATE.isRunning = false;
-    STATE.currentAgentId = null;
-    STATE.abortController = null;
-    document.getElementById('stopBtn').classList.remove('visible');
-    document.getElementById('sendBtn').disabled = false;
-    updateActiveAgentsBar();
   }
 }
 
@@ -1364,10 +1367,6 @@ async function determineIfAgentShouldRespond(agent) {
       const text = data.choices?.[0]?.message?.content?.trim() || '';
       return text !== 'PASS';
     }
-  } catch(e) {}
-
-  return true; // Default: respond
-}
   } catch(e) {}
 
   return true; // Default: respond
