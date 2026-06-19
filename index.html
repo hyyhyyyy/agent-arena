@@ -132,6 +132,28 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 .thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes dotPulse { 0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1); } }
 
+/* Thinking process (reasoning) */
+.msg-thinking-process {
+  margin-bottom: 8px; border: 1px solid var(--border); border-radius: var(--radius-md);
+  overflow: hidden; background: var(--bg-secondary);
+}
+.thinking-header {
+  display: flex; align-items: center; gap: 8px; padding: 8px 12px;
+  cursor: pointer; font-size: 12px; color: var(--text-muted);
+  background: var(--bg-tertiary); transition: background 0.2s; user-select: none;
+}
+.thinking-header:hover { background: var(--bg-hover); }
+.thinking-header .thinking-toggle-icon { transition: transform 0.2s; font-size: 10px; }
+.thinking-header .thinking-toggle-icon.collapsed { transform: rotate(-90deg); }
+.thinking-header .thinking-label { flex: 1; font-weight: 500; }
+.thinking-header .thinking-duration { font-size: 11px; color: var(--text-muted); }
+.thinking-body {
+  padding: 10px 14px; font-size: 13px; line-height: 1.6; color: var(--text-secondary);
+  max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-break: break-word;
+  font-family: var(--font-mono);
+}
+.thinking-body.collapsed { display: none; }
+
 /* Quote reference */
 .msg-quote {
   padding: 6px 10px; margin-bottom: 6px; border-left: 3px solid var(--accent);
@@ -502,6 +524,13 @@ html, body { height: 100%; font-family: var(--font-sans); background: var(--bg-p
 
       <div style="border-top:1px solid var(--border); padding-top:16px; margin-top:8px;">
         <div style="font-size:13px; font-weight:600; margin-bottom:12px; color:var(--text-secondary);">高级参数</div>
+        <div class="form-group">
+          <label class="form-label">显示思考过程</label>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div class="toggle" id="agentShowThinking" onclick="this.classList.toggle('on')"></div>
+            <span style="font-size:12px; color:var(--text-muted);">开启后，Agent 的推理过程（reasoning_content）将显示在回复中</span>
+          </div>
+        </div>
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">温度 (Temperature)</label>
@@ -663,6 +692,18 @@ const TEMPLATES = [
 // ===== UTILS =====
 function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
 
+function toggleThinkingProcess(headerEl) {
+  const body = headerEl.nextElementSibling;
+  const icon = headerEl.querySelector('.thinking-toggle-icon');
+  if (body.classList.contains('collapsed')) {
+    body.classList.remove('collapsed');
+    icon.classList.remove('collapsed');
+  } else {
+    body.classList.add('collapsed');
+    icon.classList.add('collapsed');
+  }
+}
+
 function toast(msg, type = 'info') {
   const el = document.createElement('div');
   el.className = 'toast';
@@ -762,7 +803,7 @@ function renderAgentsList() {
     <div class="agent-card ${a.active ? 'selected' : ''}" onclick="editAgent('${a.id}')">
       <div class="agent-card-avatar" style="background:${a.color}">${a.name.charAt(0)}</div>
       <div class="agent-card-info">
-        <div class="agent-card-name">${escapeHtml(a.name)}</div>
+        <div class="agent-card-name">${escapeHtml(a.name)}${a.showThinking ? ' <span style="font-size:10px;color:var(--text-muted);font-weight:400;">💭</span>' : ''}</div>
         <div class="agent-card-role">${escapeHtml(a.role || '未设置角色')}</div>
       </div>
       <div class="agent-card-toggle" onclick="event.stopPropagation()">
@@ -831,6 +872,7 @@ function saveAgent() {
     role: document.getElementById('agentRole').value.trim(),
     personality: document.getElementById('agentPersonality').value.trim(),
     systemPrompt: document.getElementById('agentSystemPrompt').value.trim(),
+    showThinking: document.getElementById('agentShowThinking').classList.contains('on'),
     temperature: parseFloat(document.getElementById('agentTemp').value) || 0.7,
     maxTokens: parseInt(document.getElementById('agentMaxTokens').value) || 2048,
     model: document.getElementById('agentModel').value.trim(),
@@ -870,6 +912,8 @@ function editAgent(id) {
     document.getElementById('agentRole').value = agent.role || '';
     document.getElementById('agentPersonality').value = agent.personality || '';
     document.getElementById('agentSystemPrompt').value = agent.systemPrompt || '';
+    const showThinkingToggle = document.getElementById('agentShowThinking');
+    showThinkingToggle.classList.toggle('on', !!agent.showThinking);
     document.getElementById('agentTemp').value = agent.temperature || 0.7;
     document.getElementById('agentMaxTokens').value = agent.maxTokens || 2048;
     document.getElementById('agentModel').value = agent.model || '';
@@ -915,6 +959,7 @@ function resetForm() {
   document.getElementById('agentRole').value = '';
   document.getElementById('agentPersonality').value = '';
   document.getElementById('agentSystemPrompt').value = '';
+  document.getElementById('agentShowThinking').classList.remove('on');
   document.getElementById('agentTemp').value = '0.7';
   document.getElementById('agentMaxTokens').value = '2048';
   document.getElementById('agentModel').value = '';
@@ -1065,11 +1110,21 @@ function renderMessage(msg) {
     const agent = STATE.agents.find(a => a.id === msg.agentId);
     const color = agent?.color || '#666';
     const name = agent?.name || 'Agent';
+    const showThinking = agent?.showThinking && msg.reasoning;
     div.innerHTML = `
       <div class="msg-avatar" style="background:${color}">${name.charAt(0)}</div>
       <div class="msg-body" style="position:relative;">
         <div class="msg-name" style="color:${color}">${escapeHtml(name)} <span class="time">${formatTime(msg.timestamp)}</span></div>
         ${msg.thinking ? `<div class="msg-thinking">${msg.thinking}</div>` : ''}
+        ${showThinking ? `
+          <div class="msg-thinking-process">
+            <div class="thinking-header" onclick="toggleThinkingProcess(this)">
+              <span class="thinking-toggle-icon">▼</span>
+              <span class="thinking-label">💭 思考过程</span>
+            </div>
+            <div class="thinking-body" id="reasoning-body-${msg.id}">${escapeHtml(msg.reasoning)}</div>
+          </div>
+        ` : ''}
         ${msg.quote ? `<div class="msg-quote" onclick="scrollToMsg('${msg.quote}')">↩ 引用消息</div>` : ''}
         <div class="msg-bubble" id="bubble-${msg.id}">
           <div class="md-content" id="md-${msg.id}">${msg.content ? renderMarkdown(msg.content) : ''}</div>
@@ -1241,15 +1296,33 @@ async function triggerAgentResponses(specificAgentId, targetAgents) {
           // Remove thinking indicator and update content
           const msgIdx = STATE.messages.findIndex(m => m.id === thinkingMsg.id);
           if (msgIdx !== -1) {
-            STATE.messages[msgIdx].content = response;
+            STATE.messages[msgIdx].content = response.content;
             STATE.messages[msgIdx].thinking = undefined;
+            STATE.messages[msgIdx].reasoning = response.reasoning || undefined;
             saveState();
             // Update DOM
             const bubble = document.getElementById(`bubble-${thinkingMsg.id}`);
             const md = document.getElementById(`md-${thinkingMsg.id}`);
             const thinkingEl = document.querySelector(`#msg-${thinkingMsg.id} .msg-thinking`);
             if (thinkingEl) thinkingEl.remove();
-            if (md) md.innerHTML = renderMarkdown(response);
+            if (md) md.innerHTML = renderMarkdown(response.content);
+            // Insert reasoning block if agent has showThinking enabled and reasoning exists
+            if (agent.showThinking && response.reasoning) {
+              const msgBody = document.querySelector(`#msg-${thinkingMsg.id} .msg-body`);
+              const bubbleEl = document.getElementById(`bubble-${thinkingMsg.id}`);
+              if (msgBody && bubbleEl) {
+                const reasoningDiv = document.createElement('div');
+                reasoningDiv.className = 'msg-thinking-process';
+                reasoningDiv.innerHTML = `
+                  <div class="thinking-header" onclick="toggleThinkingProcess(this)">
+                    <span class="thinking-toggle-icon">▼</span>
+                    <span class="thinking-label">💭 思考过程</span>
+                  </div>
+                  <div class="thinking-body" id="reasoning-body-${thinkingMsg.id}">${escapeHtml(response.reasoning)}</div>
+                `;
+                msgBody.insertBefore(reasoningDiv, bubbleEl);
+              }
+            }
           }
         } catch(e) {
           if (e.name === 'AbortError') break;
@@ -1438,6 +1511,7 @@ async function callApi(agent) {
   const reader = resp.body.getReader();
   const decoder = new TextDecoder();
   let fullContent = '';
+  let reasoningContent = '';
   let buffer = '';
 
   while (true) {
@@ -1455,15 +1529,27 @@ async function callApi(agent) {
 
       try {
         const json = JSON.parse(data);
-        const delta = json.choices?.[0]?.delta?.content || '';
-        if (delta) {
-          fullContent += delta;
+        const delta = json.choices?.[0]?.delta;
+        // Capture reasoning content (e.g., DeepSeek, OpenAI o1-style)
+        const reasoningDelta = delta?.reasoning_content || delta?.reasoning || '';
+        const contentDelta = delta?.content || '';
+        if (reasoningDelta) {
+          reasoningContent += reasoningDelta;
+        }
+        if (contentDelta) {
+          fullContent += contentDelta;
           // Update UI in real-time
           const lastMsg = STATE.messages[STATE.messages.length - 1];
           if (lastMsg) {
             lastMsg.content = fullContent;
+            lastMsg.reasoning = reasoningContent;
             const md = document.getElementById(`md-${lastMsg.id}`);
             if (md) md.innerHTML = renderMarkdown(fullContent);
+            // Update reasoning display if agent has showThinking enabled
+            if (agent.showThinking && reasoningContent) {
+              const reasoningBody = document.getElementById(`reasoning-body-${lastMsg.id}`);
+              if (reasoningBody) reasoningBody.textContent = reasoningContent;
+            }
             scrollToBottom();
           }
         }
@@ -1471,7 +1557,7 @@ async function callApi(agent) {
     }
   }
 
-  return fullContent;
+  return { content: fullContent, reasoning: reasoningContent };
 }
 
 function buildSystemPrompt(agent) {
@@ -1528,6 +1614,9 @@ function exportChat() {
       text += `**[${time}] 你:** ${msg.content}\n\n`;
     } else if (msg.type === 'agent') {
       const agent = STATE.agents.find(a => a.id === msg.agentId);
+      if (msg.reasoning) {
+        text += `**[${time}] ${agent?.name || 'Agent'} (思考过程):** ${msg.reasoning}\n\n`;
+      }
       text += `**[${time}] ${agent?.name || 'Agent'}:** ${msg.content}\n\n`;
     } else if (msg.type === 'system') {
       text += `*[${time}] ${msg.content}*\n\n`;
